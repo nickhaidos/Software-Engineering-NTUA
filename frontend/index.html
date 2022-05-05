@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Interoperability Frontend</title>
+</head>
+<body style="background-color: #161d20;">
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+
+<style type="text/css">
+.button {
+  padding: 8px 16px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 2px 1px;
+  transition-duration: 0.4s;
+  cursor: pointer;
+  background-color: white;
+  color: black;
+  border: 2px solid #555555;
+}
+
+.button:hover {
+  background-color: #555555;
+  color: white;
+}
+
+.info {
+	text-align: center;
+	font-size: 20px;
+	margin-top: 20px;
+	color: #cccccc;
+}
+</style>
+
+<form action="?" method="POST" style="text-align: center;">
+
+  <div class="form-group">
+    <label style="color: #cccccc;">Date From</label></br>
+    <input type="date" class="form-control" id="date_from" name="date_from" value="{{ df }}" required>
+  </div>
+</br>
+  <div class="form-group">
+    <label style="color: #cccccc;">Date To</label></br>
+    <input type="date" class="form-control" id="date_to" name="date_to" value="{{ dt }}" required>
+  </div>
+</br>
+  <button type="submit" class="btn btn-primary button">Submit</button>
+
+</form>
+
+<p class="info">Showing Data from {{df}} up to {{dt}}.</p>
+
+
+<div>
+
+<div style="margin-top:50px;">
+<div style="display:  inline-block; margin-left: 7.5%; margin-right: 5%; width:40%; height:40%; border-style:solid; border-width:2px; border-color:grey; border-radius:5px;">
+	<canvas id="myChart"></canvas>
+</div>
+
+<div style="display:  inline-block; width:40%; height:40%; border-style:solid; border-width:2px; border-color:grey; border-radius:5px;">
+	<canvas id="myChart2"></canvas>
+</div>
+</div>
+
+<div style="margin-top:3%; margin-bottom:50px;">
+<div style="display:  inline-block; margin-left: 7.5%; margin-right: 5%; width:40%; height:40%; border-style:solid; border-width:2px; border-color:grey; border-radius:5px;">
+	<canvas id="myChart3"></canvas>
+</div>
+
+<div style="display:  inline-block; width:40%; height:40%; border-style:solid; border-width:2px; border-color:grey; border-radius:5px;">
+	<canvas id="myChart4"></canvas>
+</div>
+</div>
+
+</div>
+
+<script type="text/javascript">
+	// Chart.defaults.global.defaultFontColor='blue';
+
+	Chart.defaults.color = "#cccccc";
+
+  var data_in = {{ dataa|tojson }};
+
+  const chart = new Chart(document.getElementById('myChart'), {
+	  type: 'bar',
+	  data: {
+	    labels: data_in[2],
+	    datasets: [{
+	      label: 'Total Passes',
+	      data: data_in[3],
+	      backgroundColor: '#36498f',
+	    }]
+	  },
+	  options: {
+	    scales: {
+	      xAxes: [{
+	        display: false,
+	        barPercentage: 1.3,
+	        ticks: {
+	          max: 3,
+	        }
+	      }, {
+	        display: true,
+	        ticks: {
+	          autoSkip: false,
+	          max: 4,
+	        }
+	      }],
+	      yAxes: [{
+	        ticks: {
+	          beginAtZero: true
+	        }
+	      }]
+	    },
+	    plugins: {
+            title: {
+                display: true,
+                text: 'Most Commonly Used Stations'
+            },
+            legend: {
+				    		display: false,
+						}
+        }
+	  }
+	});
+
+  const chart2 = new Chart(document.getElementById('myChart2'), {
+	  type: 'bar',
+	  data: {
+	    labels: data_in[0],
+	    datasets: [{
+	      label: 'Passes from other Operators',
+	      data: data_in[1],
+	      backgroundColor: '#2d7c9d',
+	    }]
+	  },
+	  options: {
+	    scales: {
+	      xAxes: [{
+	        display: false,
+	        barPercentage: 1.3,
+	        ticks: {
+	          max: 3,
+	        }
+	      }, {
+	        display: true,
+	        ticks: {
+	          autoSkip: false,
+	          max: 4,
+	        }
+	      }],
+	      yAxes: [{
+	        ticks: {
+	          beginAtZero: true
+	        }
+	      }]
+	    },
+	    plugins: {
+            title: {
+                display: true,
+                text: 'Total Passes from other Operators'
+            },
+            legend: {
+				    		display: false,
+						}
+        }
+	  }
+	});
+
+    const chart3 = new Chart(document.getElementById('myChart3'), {
+	  type: 'bar',
+	  data: {
+	    labels: data_in[4],
+	    datasets: [{
+	      label: 'Total Debts',
+	      data: data_in[5],
+	      backgroundColor: '#2ddc9d',
+	    }]
+	  },
+	  options: {
+	    scales: {
+	      xAxes: [{
+	        display: false,
+	        barPercentage: 1.3,
+	        ticks: {
+	          max: 3,
+	        }
+	      }, {
+	        display: true,
+	        ticks: {
+	          autoSkip: false,
+	          max: 4,
+	        }
+	      }],
+	      yAxes: [{
+	        ticks: {
+	          beginAtZero: true
+	        }
+	      }]
+	    },
+	    plugins: {
+            title: {
+                display: true,
+                text: 'Total Debts to other Operators'
+            },
+            legend: {
+				    		display: false,
+						}
+        }
+	  }
+	});
+
+    const chart4 = new Chart(document.getElementById('myChart4'), {
+	  type: 'line',
+	  data: {
+	    labels: data_in[6],
+	    datasets: [{
+	      label: 'Recorded Passes for this Hour',
+	      data: data_in[7],
+	      backgroundColor: 'rgb(255, 99, 132)',
+	      borderColor: 'rgb(255, 99, 132)',
+	    }]
+	  },
+	  options: {
+	    scales: {
+	      xAxes: [{
+	        display: false,
+	        barPercentage: 1.3,
+	        ticks: {
+	          max: 3,
+	        }
+	      }, {
+	        display: true,
+	        ticks: {
+	          autoSkip: false,
+	          max: 4,
+	        }
+	      }],
+	      yAxes: [{
+	        ticks: {
+	          beginAtZero: true
+	        }
+	      }]
+	    },
+	    plugins: {
+            title: {
+                display: true,
+                text: 'Total Passes per Hour'
+            },
+            legend: {
+				    		display: false,
+						}
+        }
+	  }
+	});
+</script>
+
+</body>
+</html>
