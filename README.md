@@ -1,5 +1,7 @@
 # TL21-09
 
+Semester project for class "Software Engineering 2021-2022" (7th semester ECE NTUA)
+
 Εξαμηνιαία Εργασία στο μάθημα "Τεχνολογία Λογισμικού" 2021-2022
 
 Μέλη Ομάδας:
